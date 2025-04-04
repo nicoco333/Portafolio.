@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Alerta Bootstrap</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5 text-center">
+    <button class="btn btn-info" onclick="document.getElementById('alerta').classList.remove('d-none')">Mostrar alerta</button>
+    <div id="alerta" class="alert alert-info mt-3 d-none">
+      Esto es un mensaje de información.
+    </div>
+  </div>
+</body>
+</html>
