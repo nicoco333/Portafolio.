@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF=8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            Lista de estaciones
+        </title>
+    </head>
+</html>
+<body>
+    <h3>Lista de estaciones</h3>
+    <h4>ACA YA HICE CAMBIOS</h4>
+    <hr width="90%" align="left">
+    <form action="servidor" method="get">
+        <table width="70%">
+            <tr>
+                <td>
+                    <label for="texto">Texto:</label><br>
+                    <input type="text" name="texto" id="texto" placeholder="Texto a filtrar">
+                </td>
+                <td>
+                    <label for="barrio">Barrio:</label><br>
+                    <select name="barrio" id="barrio">
+                        <option value="todos" selected>Todos</option>
+                        <option value="Centro">Centro</option>
+                        <option value="Nueva Córdoba">Nueva Córdoba</option>
+                        <option value="Ciudad Universitaria">Ciudad Universitaria</option>
+                        <option value="General Paz">General Paz</option>
+                        <option value="Alberdi">Alberdi</option>
+                        <option value="Jardín">Jardín</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" name="inactivos" id="inactivos"> Incluir Inactivos
+                </td>
+                <td align="right">
+                    <input type="submit" value="Filtrar">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <table border="1px" width="90%">
+        <thead>
+            <tr>
+                <th>Nro</th>
+                <th>Nombre</th>
+                <th>Direccion</th>
+                <th>Barrio</th>
+                <th>Activo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>1</td>
+              <td>Plaza San Martín</td>
+              <td>Entre Ríos 50</td>
+              <td>Centro</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Terminal de Ómnibus</td>
+              <td>Bv. Perón 380</td>
+              <td>Nueva Córdoba</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Ciudad Universitaria</td>
+              <td>Av. Haya de la Torre 500</td>
+              <td>Ciudad Universitaria</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Parque Sarmiento</td>
+              <td>Av. Deodoro Roca s/n</td>
+              <td>Nueva Córdoba</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>Plaza España</td>
+              <td>Av. Lugones y Av. Chacabuco</td>
+              <td>Nueva Córdoba</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>Costanera Norte</td>
+              <td>Av. Costanera y Jujuy</td>
+              <td>General Paz</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>Plaza Alberdi</td>
+              <td>Av. Colón y Gral. Paz</td>
+              <td>Alberdi</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>Patio Olmos</td>
+              <td>Av. Vélez Sarsfield 361</td>
+              <td>Centro</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>Parque Las Heras</td>
+              <td>Av. Costanera y Santa Fe</td>
+              <td>General Paz</td>
+              <td>Sí</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>Barrio Jardín</td>
+              <td>Ricardo Rojas 1350</td>
+              <td>Jardín</td>
+              <td>No</td>
+            </tr>
+        </tbody>
+    </table> 
+</body>
