@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Ejercicio 2</title>
+    </head>
+    <body>
+        <ul id="lista">
+            <li>Ítem 1</li>
+            <li>Ítem 2</li>
+        </ul>
+        <button id="agregarBtn">Agregar Ítem</button>
+        <script>
+            document.getElementById("agregarBtn").addEventListener("click"
+            , function() {
+            const nuevoItem = document.createElement("li");
+            nuevoItem.textContent = "Ítem agregado";
+            document.getElementById("lista").appendChild(nuevoItem);
+            });
+        </script>
+    </body>
+</html>
