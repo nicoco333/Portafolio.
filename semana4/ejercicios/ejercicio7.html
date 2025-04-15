@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Ejercicio 7</title>
+        <!-- Bootstrap CSS CDN -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container mt-4">
+            <h1 class="mb-4">Publicaciones (Refrescables)</h1>
+            <button id="refrescarBtn" class="btn btn-primary mb-3">Refrescar Datos</button>
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Contenido</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaPosts">
+                <!-- Se actualizarán los posts -->
+                </tbody>
+            </table>
+        </div>
+        <script>
+            async function cargarPosts() {
+            try {
+            const respuesta = await
+            fetch("https://jsonplaceholder.typicode.com/posts");
+                const datos = await respuesta.json();
+                const tabla = document.getElementById("tablaPosts");
+                tabla.innerHTML = ""; // Vaciar tabla antes de actualizar
+                datos.slice(0, 10).forEach(post => {
+                const fila = document.createElement("tr");
+                fila.innerHTML = `<td>${post.id}</td>
+                <td>${post.title}</td>
+                <td>${post.body}</td>`;
+                tabla.appendChild(fila);
+                });
+                } catch (error) {
+                console.error("Error al cargar datos:", error);
+            }
+            }
+            document.getElementById("refrescarBtn").addEventListener("click", cargarPosts);
+
+            // Cargar los datos cuando se carga la página
+            cargarPosts();
+        </script>
+    </body>
+</html>

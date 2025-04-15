@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Ejercicio 4</title>
+        <style>
+        #divClickeable {
+        width: 200px;
+        height: 100px;
+        background-color: lightcoral;
+        line-height: 100px;
+        text-align: center;
+        cursor: pointer;
+        }
+        </style>
+    </head>
+    <body>
+        <div id="divClickeable">Haz Clic Aquí</div>
+        <script>
+            const divElem = document.getElementById("divClickeable");
+            divElem.addEventListener("click", function() {
+            console.log("Div activado");
+            });
+        </script>
+    </body>
+</html>
