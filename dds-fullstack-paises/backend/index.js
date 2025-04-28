@@ -10,7 +10,6 @@ app.use(cors()); // Habilita CORS para todas las rutas
 app.use(express.json()); // Permite que Express lea JSON en las peticiones
 
 // --- Configuración de Sequelize ---
-
 // Creamos una instancia de Sequelize conectando a un archivo SQLite
 const sequelize = new Sequelize({
     dialect: 'sqlite',
@@ -93,16 +92,16 @@ res.send('¡Backend de Países Funcionando!');
 // Ruta para obtener todos los países
 app.get('/api/countries', async (req, res) => {
     try {
-    const countries = await Country.findAll(); // Busca todos los registros en la tabla
-    Country
-    res.json(countries); // Envía la lista de países como JSON
+        const countries = await Country.findAll(); // Busca todos los registros en la tabla
+        Country
+        res.json(countries); // Envía la lista de países como JSON
     } catch (error) {
-    console.error('Error al obtener países:', error);
-    res.status(500).json({ error: 'Error interno del servidor al obtener países.' });
+        console.error('Error al obtener países:', error);
+        res.status(500).json({ error: 'Error interno del servidor al obtener países.' });
     }
-    });
+});
 
-// Iniciar el servidor
+// Iniciar el servidor (asegurarse de que esto esté al final)
 // ¡Importante! Iniciar el servidor solo después de intentar sincronizar la DB
 // Aunque con force:true y async/await en seedDatabase, la sincronización y el seeding
 // deberían terminar antes de que `sequelize.sync` termine, es una buena práctica
