@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadingMessage = document.getElementById('loading-message');
     // URL de nuestra API del backend
     const API_URL = 'http://localhost:3000/api/countries';
+
     // Función para obtener los datos de los países
     async function fetchCountries() {
         try {
@@ -18,8 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Si no es exitosa, lanzar un error
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            // Convertir la respuesta a JSON
-            const countries = await response.json();
+
+            // Convertir la respuesta a JSONconst 
+            countries = await response.json();
+
             // Limpiar el contenedor antes de renderizar (si no está vacío)
             countriesContainer.innerHTML = ''; // Limpiamos cualquier contenido previo (como el mensaje de carga si no lo ocultamos antes)
             // Renderizar los países en el HTML
@@ -27,8 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Error al obtener los países:', error);
             // Mostrar un mensaje de error al usuario
-            countriesContainer.innerHTML = `<p class="text-danger">Error al cargar los
-    países: ${error.message}</p>`;
+
+            countriesContainer.innerHTML = `<p class="text-danger">Error al cargar los países: ${error.message}</p>`;
+
         }
     }
     // Función para renderizar los países en el DOM
@@ -40,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
         countries.forEach(country => {
             // Crear un div para la columna (Bootstrap Grid)
             const colDiv = document.createElement('div');
-            colDiv.classList.add('col'); // Clase para columna en Bootstrap Grid
-            // Crear un div para la tarjeta de Bootstrap
+            colDiv.classList.add('col'); // Clase para columna en Bootstrap Grid// Crear un div para la tarjeta de Bootstrap
+
             const cardDiv = document.createElement('div');
             cardDiv.classList.add('card', 'h-100', 'country-card'); // h-100 para que todas tengan la misma altura
             // Crear el cuerpo de la tarjeta
@@ -61,8 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 country.population.toLocaleString() : 'N/D'}`; // Formato de número
             const currencyElement = document.createElement('p');
             currencyElement.classList.add('card-text');
-            currencyElement.textContent = `Moneda: ${country.currency || 'N/D'}`;
-            // Ensamblar la tarjeta
+            currencyElement.textContent = `Moneda: ${country.currency || 'N/D'}`;// Ensamblar la tarjeta
+
             cardBodyDiv.appendChild(flagImg);
             cardBodyDiv.appendChild(nameElement);
             cardBodyDiv.appendChild(populationElement);
@@ -75,4 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // Llamar a la función para obtener y mostrar los países cuando el DOM esté listo
     fetchCountries();
+
 });
+
