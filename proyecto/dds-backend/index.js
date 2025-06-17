@@ -1,5 +1,6 @@
 const express = require("express");
 
+
 // crear servidor
 const app = express();
 app.use(express.json()); // para poder leer json en el body
@@ -12,10 +13,25 @@ app.get("/", (req, res) => {
 const categoriasmockRouter = require("./routes/categoriasmock");
 app.use(categoriasmockRouter);
 
+// iniciar base de datos
+const inicializarBase = require("./models/inicializarBase");
+
+inicializarBase().then(() => {
+  app.listen(port, () => {
+    console.log(`sitio escuchando en el puerto ${port}`);
+  });
+});
+
+const categoriasRouter = require("./routes/categorias");
+app.use(categoriasRouter);
+
 
 // levantar servidor
 const port = 3000;
 app.locals.fechaInicio = new Date();  // fecha y hora inicio de aplicacion
-app.listen(port, () => {
+inicializarBase().then(() => {
+  app.listen(port, () => {
     console.log(`sitio escuchando en el puerto ${port}`);
+  });
 });
+
