@@ -1,29 +1,24 @@
 const express = require("express");
 
-
 // crear servidor
 const app = express();
 app.use(express.json()); // para poder leer json en el body
 
+const inicializarBase = require("./models/inicializarBase");  // inicializar base de datos
+
 // controlar ruta
 app.get("/", (req, res) => {
-    res.send("Backend inicial dds-backend!");
+  res.send("Backend inicial dds-backend!");
 });
 
 const categoriasmockRouter = require("./routes/categoriasmock");
 app.use(categoriasmockRouter);
 
-// iniciar base de datos
-const inicializarBase = require("./models/inicializarBase");
-
-inicializarBase().then(() => {
-  app.listen(port, () => {
-    console.log(`sitio escuchando en el puerto ${port}`);
-  });
-});
-
 const categoriasRouter = require("./routes/categorias");
 app.use(categoriasRouter);
+
+const articulosRouter = require("./routes/articulos");
+app.use(articulosRouter);
 
 
 // levantar servidor
