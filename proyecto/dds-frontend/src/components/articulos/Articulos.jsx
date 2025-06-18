@@ -6,6 +6,7 @@ import ArticulosRegistro from "./ArticulosRegistro";
 import { articulosService } from "../../services/articulos.service";
 //import { categoriasMockService as categoriasService } from "../../services/categorias-mock.service";
 import { categoriasService } from "../../services/categorias.service";
+import modalDialogService from "../../services/modalDialog.service";
 
 function Articulos() {
     const TituloAccionABMC = {
@@ -46,11 +47,13 @@ function Articulos() {
             _pagina = Pagina;
         }
 
+        modalDialogService.BloquearPantalla(true);
         const data = await articulosService.Buscar(Nombre, Activo, _pagina);
+        modalDialogService.BloquearPantalla(false);
         setItems(data.Items);
         setRegistrosTotal(data.RegistrosTotal);
 
-        //generar array de las páginas para mostrar en select del paginador
+        //generar array de las paginas para mostrar en select del paginador
         const arrPaginas = [];
         for (let i = 1; i <= Math.ceil(data.RegistrosTotal / 10); i++) {
             arrPaginas.push(i);
@@ -71,7 +74,7 @@ function Articulos() {
     }
     function Modificar(item) {
         if (!item.Activo) {
-            alert("No puede modificarse un registro Inactivo.");
+            modalDialogService.Alert("No puede modificarse un registro Inactivo.");
             return;
         }
         BuscarPorId(item, "M"); // paso la accionABMC pq es asincrono la busqueda y luego de ejecutarse quiero cambiar el estado accionABMC
@@ -102,15 +105,19 @@ function Articulos() {
     }
 
     async function ActivarDesactivar(item) {
-        const resp = window.confirm(
-            "Está seguro que quiere " +
+        modalDialogService.Confirm(
+            "Esta seguro que quiere " +
             (item.Activo ? "desactivar" : "activar") +
-            " el registro?"
+            " el registro?",
+            undefined,
+            undefined,
+            undefined,
+            async () => {
+                await articulosService.ActivarDesactivar(item);
+                await Buscar();
+            }
         );
-        if (resp) {
-            await articulosService.ActivarDesactivar(item);
-            await Buscar();
-        }
+
     }
 
 
@@ -120,7 +127,7 @@ function Articulos() {
             await articulosService.Grabar(item);
         }
         catch (error) {
-            alert(error?.response?.data?.message ?? error.toString())
+            modalDialogService.Alert(error?.response?.data?.message ?? error.toString())
             return;
         }
         await Buscar();
