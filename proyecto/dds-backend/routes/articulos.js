@@ -45,7 +45,7 @@ router.get("/api/articulos/:id", async function (req, res) {
   // #swagger.tags = ['Articulos']
   // #swagger.summary = 'obtiene un Articulo'
   // #swagger.parameters['id'] = { description: 'identificador del Articulo...' }
-   let items = await articulos.findOne({
+  let items = await articulos.findOne({
     attributes: [
       "IdArticulo",
       "Nombre",
@@ -79,13 +79,13 @@ router.post("/api/articulos/", async (req, res) => {
       FechaAlta: req.body.FechaAlta,
       Activo: req.body.Activo,
     });
-    res.status(200).json(item.dataValues); // devolvemos el registro agregado!
+    res.status(201).json(item.dataValues); // devolvemos el registro agregado!
   } catch (err) {
     if (err instanceof ValidationError) {
       // si son errores de validación, los devolvemos
       let messages = '';
       err.errors.forEach((x) => messages += (x.path ?? 'campo') + ": " + x.message + '\n');
-      res.status(400).json({message : messages});
+      res.status(400).json({ message: messages });
     } else {
       // si son errores desconocidos, los dejamos que los controle el middleware de errores
       throw err;
@@ -94,15 +94,6 @@ router.post("/api/articulos/", async (req, res) => {
 });
 
 router.put("/api/articulos/:id", async (req, res) => {
-  // #swagger.tags = ['Articulos']
-  // #swagger.summary = 'actualiza un Artículo'
-  // #swagger.parameters['id'] = { description: 'identificador del Artículo...' }
-  /*    #swagger.parameters['Articulo'] = {
-                in: 'body',
-                description: 'Articulo a actualizar',
-                schema: { $ref: '#/definitions/Articulos' }
-    } */
-
   try {
     let item = await articulos.findOne({
       attributes: [
@@ -129,27 +120,13 @@ router.put("/api/articulos/:id", async (req, res) => {
     item.FechaAlta = req.body.FechaAlta;
     item.Activo = req.body.Activo;
     await item.save();
-
-    // otra forma de hacerlo
-    // let data = await articulos.update(
-    //   {
-    //     Nombre: req.body.Nombre,
-    //     Precio: req.body.Precio,
-    //     CodigoDeBarra: req.body.CodigoDeBarra,
-    //     IdCategoria: req.body.IdCategoria,
-    //     Stock: req.body.Stock,
-    //     FechaAlta: req.body.FechaAlta,
-    //     Activo: req.body.Activo,
-    //   },
-    //   { where: { IdArticulo: req.params.id } }
-    // );
-    res.sendStatus(204);
+    res.status(200).json(item);
   } catch (err) {
     if (err instanceof ValidationError) {
       // si son errores de validación, los devolvemos
       let messages = '';
       err.errors.forEach((x) => messages += x.path + ": " + x.message + '\n');
-      res.status(400).json({message : messages});
+      res.status(400).json({ message: messages });
     } else {
       // si son errores desconocidos, los dejamos que los controle el middleware de errores
       throw err;

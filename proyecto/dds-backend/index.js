@@ -10,6 +10,9 @@ const inicializarBase = require("./models/inicializarBase");  // inicializar bas
 app.get("/", (req, res) => {
   res.send("Backend inicial dds-backend!");
 });
+app.get('/_isalive', (req, res) => {
+  res.status(200).send('Ejecutandose desde: dds-backend');
+});
 
 const categoriasmockRouter = require("./routes/categoriasmock");
 app.use(categoriasmockRouter);
@@ -33,13 +36,20 @@ app.use(seguridadRouter);
 const usuariosRouter = require("./routes/usuarios");
 app.use(usuariosRouter);
 
+app.use((req, res) => {
+  res.status(404).send('No encontrada!');
+});
 
 // levantar servidor
 const port = 3000;
 app.locals.fechaInicio = new Date();  // fecha y hora inicio de aplicacion
-inicializarBase().then(() => {
-  app.listen(port, () => {
+if (require.main === module) {   // si no es llamado por otro módulo, es decir, si es el módulo principal -> levantamos el servidor
+  inicializarBase().then(() => {
+   app.listen(port, () => {
     console.log(`sitio escuchando en el puerto ${port}`);
+    });
   });
-});
+}
+module.exports = app; // para testing
+
 

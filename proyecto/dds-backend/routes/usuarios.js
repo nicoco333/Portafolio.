@@ -19,7 +19,12 @@ router.get('/api/usuarios',
       }
 
       const items = await usuarios.findAll();
-      res.json(items);
+      res.json(items.map(u => ({
+        IdUsuario: u.IdUsuario,
+        Usuario: u.Nombre, // <-- así el test lo espera
+        Clave: u.Clave,
+        Rol: u.Rol
+      })));
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Error al obtener los usuarios' });
