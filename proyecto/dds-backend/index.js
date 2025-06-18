@@ -20,6 +20,19 @@ app.use(categoriasRouter);
 const articulosRouter = require("./routes/articulos");
 app.use(articulosRouter);
 
+// configurar servidor
+const cors = require("cors");
+app.use(
+  cors({
+    origin: "*", // origin: 'https://dds-frontend.azurewebsites.net'
+  })
+);
+
+const seguridadRouter = require("./routes/seguridad");
+app.use(seguridadRouter);
+const usuariosRouter = require("./routes/usuarios");
+app.use(usuariosRouter);
+
 
 // levantar servidor
 const port = 3000;
