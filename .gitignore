@@ -1,0 +1,19 @@
+# Compilados / temporales
+target/
+bin/
+dist/
+node_modules/
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# Archivos grandes de empaquetado
+*.zip
+*.rar
+
+# Otros
+.DS_Store
+Thumbs.db
+.env

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.0">
+  <persistence-unit name="pu-backend" transaction-type="RESOURCE_LOCAL">
+  <class>utnfc.isi.back.sim.domain.Desarrollador</class>
+  <class>utnfc.isi.back.sim.domain.Genero</class>
+  <class>utnfc.isi.back.sim.domain.Plataforma</class>
+  <class>utnfc.isi.back.sim.domain.Juego</class>
+
+    <properties>
+      <!-- H2 en memoria -->
+      <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
+      <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:mem:backdb;DB_CLOSE_DELAY=-1;MODE=LEGACY"/>
+      <property name="jakarta.persistence.jdbc.user" value="sa"/>
+      <property name="jakarta.persistence.jdbc.password" value=""/>
+
+   <!-- El DDL lo ejecuta DatabaseInitializer (RunScript). Evitamos que Hibernate vuelva a ejecutar
+     el mismo script o cree el esquema automáticamente para no duplicar/romper la SQL. -->
+   <!-- hibernate.hbm2ddl.auto and hibernate.hbm2ddl.import_files intentionally omitted -->
+
+      <!-- Log SQL (opcional) -->
+      <property name="hibernate.show_sql" value="false"/>
+      <property name="hibernate.format_sql" value="true"/>
+
+      <property name="hibernate.session.events.log" value="false"/>
+      <property name="hibernate.generate_statistics" value="false"/>
+    </properties>
+  </persistence-unit>
+</persistence>
