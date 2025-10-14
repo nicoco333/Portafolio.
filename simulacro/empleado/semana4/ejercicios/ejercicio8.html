@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Ejercicio 8</title>
+        <!-- Bootstrap CSS CDN -->
+        <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container mt-4">
+            <button id="mostrarPosts" class="btn btn-success mb-3">Mostrar Posts</button>
+            <div id="contenedorPosts" class="list-group">
+            <!-- Se mostrarán los posts aquí -->
+            </div>
+        </div>
+        <script>
+            // Funcion para mostrar los posts al hacer clic en el boton 
+        document.getElementById("mostrarPosts").addEventListener("click", async function() {
+            try {
+            const res = await
+        fetch("https://jsonplaceholder.typicode.com/posts");
+            const posts = await res.json();
+            const contenedor =
+        document.getElementById("contenedorPosts");
+            contenedor.innerHTML = ""; // Limpiar el contenedor
+            posts.slice(0, 10).forEach(post => {
+            const item = document.createElement("a");
+            item.href = "#";
+            item.className = "list-group-item list-group-item-action";
+            item.textContent = post.title;
+            contenedor.appendChild(item);
+            });
+            } catch (error) {
+            console.error("Error al obtener posts:", error);
+            }
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestor de Tareas SPA</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="mb-4">Lista de Tareas</h2>
+
+    <!-- Formulario para agregar tareas -->
+    <form id="taskForm" class="d-flex gap-2 mb-3">
+      <input type="text" id="taskInput" class="form-control" placeholder="Nueva tarea" required>
+      <button type="submit" class="btn btn-success">Agregar</button>
+    </form>
+
+    <!-- Lista de tareas -->
+    <ul id="taskList" class="list-group" aria-live="polite"></ul>
+  </div>
+
+  <script>
+    // Simular operaciones async con localStorage
+    const obtenerTareas = async () => {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          const tareas = JSON.parse(localStorage.getItem("tareas")) || [];
+          resolve(tareas);
+        }, 300);
+      });
+    };
+
+    const guardarTareas = async (tareas) => {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          localStorage.setItem("tareas", JSON.stringify(tareas));
+          resolve();
+        }, 300);
+      });
+    };
+
+    const renderizarTareas = async () => {
+      const tareas = await obtenerTareas();
+      const taskList = document.getElementById("taskList");
+      taskList.innerHTML = "";
+
+      tareas.forEach((tarea, index) => {
+        const li = document.createElement("li");
+        li.className = "list-group-item d-flex justify-content-between align-items-center";
+        if (tarea.completada) li.classList.add("completed");
+
+        li.innerHTML = `
+          <span>${tarea.texto}</span>
+          <div>
+            <button class="btn btn-sm btn-outline-success me-2 completarBtn">✓</button>
+            <button class="btn btn-sm btn-outline-danger eliminarBtn">✕</button>
+          </div>
+        `;
+
+        // Eventos para completar/eliminar
+        li.querySelector(".completarBtn").addEventListener("click", async () => {
+          tarea.completada = !tarea.completada;
+          tareas[index] = tarea;
+          await guardarTareas(tareas);
+          renderizarTareas();
+        });
+
+        li.querySelector(".eliminarBtn").addEventListener("click", async () => {
+          if (confirm("¿Estás seguro de que deseas eliminar esta tarea?")) {
+            tareas.splice(index, 1);
+            await guardarTareas(tareas);
+            renderizarTareas();
+          }
+        });
+
+        taskList.appendChild(li);
+      });
+    };
+
+    // Agregar tarea desde formulario
+    document.getElementById("taskForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const input = document.getElementById("taskInput");
+      const texto = input.value.trim();
+      if (texto === "") {
+        alert("Por favor, escribe una tarea antes de agregarla.");
+        return;
+      }
+
+      const tareas = await obtenerTareas();
+      tareas.push({ texto, completada: false });
+      await guardarTareas(tareas);
+
+      input.value = "";
+      renderizarTareas();
+    });
+
+    // Inicializar
+    renderizarTareas();
+  </script>
+</body>
+</html>

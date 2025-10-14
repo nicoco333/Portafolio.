@@ -1,0 +1,7 @@
+/* frontend/style.css */
+.country-flag {
+    width: 50px; /* Ajusta el tamaño de la bandera */
+    height: auto;
+    margin-right: 10px;
+    border: 1px solid #ccc; /* Un pequeño borde para que se vea la forma */
+}

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Ejercicio 5</title>
+    </head>
+    <body>
+        <input type="text" id="campoEntrada" placeholder="Escribe algo...">
+        <p id="salidaTexto"></p>
+        <script>
+        const campo = document.getElementById("campoEntrada");
+        const salida = document.getElementById("salidaTexto");
+        campo.addEventListener("input", function() {
+        salida.textContent = campo.value;
+        });
+        </script>
+    </body>
+</html>

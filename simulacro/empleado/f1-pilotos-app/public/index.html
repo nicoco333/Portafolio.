@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boxes & Pitstops - Pilotos F1</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
+    <style>
+        body {
+            padding-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="mb-4 text-center">🏆 Boxes & Pitstops 🏁</h1>
+        <p class="text-center">Gestión básica de Pilotos de F1</p>
+        <hr>
+        <h2>Lista de Pilotos</h2>
+        <ul id="pilotos-list" class="list-group mb-4">
+            <!-- Los pilotos se cargarán aquí con JavaScript -->
+            <li class="list-group-item text-center text-muted">Cargando pilotos...</li>
+        </ul>
+        <hr>
+        <h2>Agregar Nuevo Piloto</h2>
+        <form id="add-piloto-form">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="nombre" required>
+            </div>
+            <div class="mb-3">
+                <label for="escuderia" class="form-label">Escudería</label>
+                <input type="text" class="form-control" id="escuderia" required>
+            </div>
+            <div class="mb-3">
+                <label for="pais" class="form-label">País</label>
+                <input type="text" class="form-control" id="pais">
+            </div>
+            <div class="mb-3">
+                <label for="numeroCoche" class="form-label">Número de Coche</label>
+                <input type="number" class="form-control" id="numeroCoche">
+            </div>
+            <div class="mb-3">
+                <label for="campeonatos" class="form-label">Campeonatos
+                    Mundiales</label>
+                <input type="number" class="form-control" id="campeonatos" value="0">
+            </div>
+            <button type="submit" class="btn btn-primary">Agregar Piloto</button>
+        </form>
+    </div>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <!-- Nuestro script JS -->
+    <script src="/script.js"></script>
+</body>
+
+</html>

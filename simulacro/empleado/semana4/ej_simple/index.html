@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ejemplo DOM</title>
+    </head>
+    <body>
+        <h1 id="titulo">Título Original</h1>
+        <p id="parrafo">Este es un párrafo.</p>
+        <button onclick="cambiarTexto()">Cambiar Título</button>
+        <script>
+            function cambiarTexto() {
+            const tituloElemento =
+            document.getElementById("titulo");
+            tituloElemento.textContent = "Nuevo Título";
+            }
+        </script>
+    </body>
+</html>
