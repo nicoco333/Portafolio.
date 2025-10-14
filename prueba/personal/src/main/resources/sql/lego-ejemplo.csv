@@ -1,0 +1,4 @@
+prod_id,set_name,prod_desc,review_difficulty,piece_count,star_rating,list_price,theme_name,age_group_code,country_name,country_code
+1001,Starter Set,"A small starter set",Easy,20,4.5,9.99,City,3-5,United Kingdom,GBR
+1002,Builder's Pack,"Medium pack for builders",Medium,120,4.7,49.99,Technic,7-12,United States,USA
+1003,Advanced Kit,"Complex model for advanced builders",Hard,800,4.9,299.99,Creator,13+,United Kingdom,GBR

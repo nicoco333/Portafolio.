@@ -1,0 +1,19 @@
+﻿# Build / IDE
+target/
+bin/
+dist/
+node_modules/
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# Paquetes grandes
+*.zip
+*.rar
+
+# Varios
+.DS_Store
+Thumbs.db
+.env
