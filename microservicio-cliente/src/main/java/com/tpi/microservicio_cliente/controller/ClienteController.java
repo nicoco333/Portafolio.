@@ -11,23 +11,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+// Esta es la importación que ya añadiste
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.List; 
-import java.util.Arrays; 
+import java.util.List;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/cliente") // URL base para este controlador
+@RequestMapping("/api/cliente") 
 public class ClienteController {
 
-    // Inyectamos los 3 repositorios
+    // ... (El constructor no cambia) ...
     private final ClienteRepository clienteRepository;
     private final ContenedorRepository contenedorRepository;
     private final SolicitudTrasladoRepository solicitudTrasladoRepository;
 
-    // Inyección de dependencias por constructor
     public ClienteController(ClienteRepository clienteRepository,
                              ContenedorRepository contenedorRepository,
                              SolicitudTrasladoRepository solicitudTrasladoRepository) {
@@ -36,11 +36,13 @@ public class ClienteController {
         this.solicitudTrasladoRepository = solicitudTrasladoRepository;
     }
 
+    // --- Endpoints para CLIENTE ---
+
     /**
-     * Endpoint para registrar un nuevo cliente.
-     * HTTP POST a /api/cliente/clientes
-     * (Basado en el requisito [POST /clientes] de la entrega inicial)
+     * [CLIENTE] Endpoint para registrar un nuevo cliente.
      */
+    // <-- ¡NUEVO!
+    @PreAuthorize("hasRole('CLIENTE')")
     @PostMapping("/clientes")
     public ResponseEntity<Cliente> registrarCliente(@RequestBody Cliente cliente) {
         Cliente nuevoCliente = clienteRepository.save(cliente);
@@ -48,39 +50,22 @@ public class ClienteController {
     }
 
     /**
-     * Endpoint para crear una nueva solicitud de traslado con su contenedor.
-     * HTTP POST a /api/cliente/solicitudes
-     * (Basado en el requisito [POST /solicitudes] de la entrega inicial)
+     * [CLIENTE] Endpoint para crear una nueva solicitud de traslado.
      */
+    // <-- ¡NUEVO!
+    @PreAuthorize("hasRole('CLIENTE')")
     @PostMapping("/solicitudes")
     public ResponseEntity<SolicitudTraslado> crearSolicitud(@RequestBody SolicitudTraslado solicitud) {
-        // Asumimos que el JSON viene con el contenedor anidado y el ID del cliente
-        // Ejemplo de JSON:
-        // {
-        //   "cliente": { "id": 1 },
-        //   "contenedor": {
-        //     "identificacionUnica": "CONT-999",
-        //     "pesoKg": 5000.0,
-        //     "volumenM3": 30.0
-        //   }
-        // }
-
-        // 1. Ponemos el estado inicial
         solicitud.setEstado(EstadoSolicitud.BORRADOR);
-
-        // 2. Guardamos la solicitud.
-        // Gracias a "CascadeType.ALL" en la entidad SolicitudTraslado,
-        // esto guardará el nuevo Contenedor automáticamente.
         SolicitudTraslado nuevaSolicitud = solicitudTrasladoRepository.save(solicitud);
-        
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaSolicitud);
     }
 
     /**
-     * Endpoint para ver el estado de una solicitud.
-     * HTTP GET a /api/cliente/solicitudes/{id}
-     * (Basado en el requisito [GET /solicitudes/{id}] de la entrega inicial)
+     * [CLIENTE] Endpoint para ver el estado de su solicitud.
      */
+    // <-- ¡NUEVO!
+    @PreAuthorize("hasRole('CLIENTE')")
     @GetMapping("/solicitudes/{id}")
     public ResponseEntity<SolicitudTraslado> verEstadoSolicitud(@PathVariable Long id) {
         Optional<SolicitudTraslado> solicitudOptional = solicitudTrasladoRepository.findById(id);
@@ -91,6 +76,14 @@ public class ClienteController {
         
         return ResponseEntity.ok(solicitudOptional.get());
     }
+
+    // --- Endpoints para ADMIN ---
+
+    /**
+     * [ADMIN] Endpoint para listar todas las solicitudes de traslado.
+     */
+    // <-- ¡NUEVO!
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/solicitudes")
     public ResponseEntity<List<SolicitudTraslado>> listarTodasLasSolicitudes() {
         List<SolicitudTraslado> solicitudes = solicitudTrasladoRepository.findAll();
@@ -99,27 +92,23 @@ public class ClienteController {
 
     /**
      * [ADMIN] Endpoint para filtrar contenedores pendientes.
-     * HTTP GET a /api/cliente/contenedores/pendientes
-     * (Basado en el requisito [GET /contenedores/estado=pendiente] de la entrega inicial)
      */
+    // <-- ¡NUEVO!
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/contenedores/pendientes")
     public ResponseEntity<List<Contenedor>> filtrarContenedoresPendientes() {
         
-        // 1. Definimos qué significa "pendiente"
         List<EstadoSolicitud> estadosPendientes = Arrays.asList(
                 EstadoSolicitud.BORRADOR, 
                 EstadoSolicitud.PROGRAMADA
         );
-
-        // 2. Buscamos las SOLICITUDES que están pendientes
         List<SolicitudTraslado> solicitudesPendientes = 
                 solicitudTrasladoRepository.findByEstadoIn(estadosPendientes);
-
-        // 3. Extraemos los CONTENEDORES de esas solicitudes
         List<Contenedor> contenedoresPendientes = solicitudesPendientes.stream()
-                .map(SolicitudTraslado::getContenedor) // Obtiene el contenedor de cada solicitud
-                .collect(Collectors.toList()); // Los junta en una nueva lista
+                .map(SolicitudTraslado::getContenedor)
+                .collect(Collectors.toList());
 
         return ResponseEntity.ok(contenedoresPendientes);
     }
-}
+
+} // <-- Llave de cierre final de la clase
